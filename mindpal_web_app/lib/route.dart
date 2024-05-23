@@ -11,7 +11,7 @@ class RouteGenerator {
       case '/register2':
         return MaterialPageRoute(builder: (_) => const Register2());
       case '/login':
-        return MaterialPageRoute(builder: (_) => const LoginPage());
+        return MaterialPageRoute(builder: (_) => const Login());
       default:
         return _errorRoute();
     }

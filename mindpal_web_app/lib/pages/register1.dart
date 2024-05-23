@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Register2.dart'; // Import the new screen
 
 void main() {
   runApp(const MyApp());
@@ -66,7 +65,7 @@ class Register1State extends State<Register1> {
               children: [
                 TextButton(
                   onPressed: () {
-                    // Handle Log In action
+                    Navigator.pushNamed(context, '/login');
                   },
                   child: const Text('Log In',
                       style: TextStyle(color: Colors.black)),
@@ -74,7 +73,7 @@ class Register1State extends State<Register1> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle Sign Up action
+                    Navigator.pushNamed(context, '/register2');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,

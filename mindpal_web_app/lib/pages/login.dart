@@ -1,153 +1,248 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
-  @override
-  LoginPageState createState() => LoginPageState();
+void main() {
+  runApp(const MyApp());
 }
 
-class LoginPageState extends State<LoginPage> {
-  bool isCounselor = true;
-  bool isChecked = false; // Variable to hold the checked state
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'MindPal',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Login(),
+      routes: {
+        '/login': (context) => const Login(),
+      },
+    );
+  }
+}
+
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  LoginState createState() => LoginState();
+}
+
+class LoginState extends State<Login> {
+  String? _selectedGender;
+  String _dateOfIssue = '';
+  bool _agreedToTOS = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey,
-              radius: 16,
-            ),
-            SizedBox(width: 8),
-            Text(
-              'MindPal',
-              style: TextStyle(color: Colors.black),
-            ),
-          ],
-        ),
+        title: const Text('MindPal'),
         actions: [
           TextButton(
-            onPressed: () {},
-            child: Text('Log in', style: TextStyle(color: Colors.grey[600])),
+            onPressed: () {
+              // Navigate to login
+            },
+            child: const Text('Log in', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.green,
-            ),
+            onPressed: () {
+              // Navigate to sign up
+            },
             child: const Text('Sign up', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          width: 400,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-              ),
-            ],
+      body: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.grey[200], // Blank left side
+            ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ToggleButtons(
-                isSelected: [isCounselor, !isCounselor],
-                onPressed: (index) {
-                  setState(() {
-                    isCounselor = index == 0;
-                  });
-                },
-                borderRadius: BorderRadius.circular(8),
-                selectedBorderColor: Colors.green,
-                selectedColor: Colors.white,
-                fillColor: Colors.green,
-                color: Colors.black,
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Text('諮商師'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Text('管理員'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const Center(
-                child: Text(
-                  'Log In',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('成為MindPal的諮商師...',
+                        style: TextStyle(fontSize: 24)),
+                    const SizedBox(height: 20),
+                    const Text('What\'s your gender?',
+                        style: TextStyle(fontSize: 16)),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: RadioListTile<String>(
+                            title: const Text('Female'),
+                            value: 'Female',
+                            groupValue: _selectedGender,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: RadioListTile<String>(
+                            title: const Text('Male'),
+                            value: 'Male',
+                            groupValue: _selectedGender,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: RadioListTile<String>(
+                            title: const Text('Non-binary'),
+                            value: 'Non-binary',
+                            groupValue: _selectedGender,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text('您的諮商證照發行日期', style: TextStyle(fontSize: 16)),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration:
+                                const InputDecoration(labelText: 'Month'),
+                            items: List.generate(12, (index) {
+                              return DropdownMenuItem(
+                                value: (index + 1).toString(),
+                                child: Text((index + 1).toString()),
+                              );
+                            }),
+                            onChanged: (value) {
+                              setState(() {
+                                _dateOfIssue = value ?? '';
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration:
+                                const InputDecoration(labelText: 'Date'),
+                            items: List.generate(31, (index) {
+                              return DropdownMenuItem(
+                                value: (index + 1).toString(),
+                                child: Text((index + 1).toString()),
+                              );
+                            }),
+                            onChanged: (value) {
+                              setState(() {
+                                _dateOfIssue = value ?? '';
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration:
+                                const InputDecoration(labelText: 'Year'),
+                            items: List.generate(50, (index) {
+                              return DropdownMenuItem(
+                                value: (2024 - index).toString(),
+                                child: Text((2024 - index).toString()),
+                              );
+                            }),
+                            onChanged: (value) {
+                              setState(() {
+                                _dateOfIssue = value ?? '';
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle file upload
+                      },
+                      child: const Text('選擇檔案'),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: '諮商專長'),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _agreedToTOS,
+                          onChanged: (value) {
+                            setState(() {
+                              _agreedToTOS = value ?? false;
+                            });
+                          },
+                        ),
+                        const Text('Agree to our '),
+                        TextButton(
+                          onPressed: () {
+                            // Handle terms of use navigation
+                          },
+                          child: const Text('Terms of use'),
+                        ),
+                        const Text(' and '),
+                        TextButton(
+                          onPressed: () {
+                            // Handle privacy policy navigation
+                          },
+                          child: const Text('Privacy Policy'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: _agreedToTOS
+                            ? () {
+                                // Handle sign up
+                              }
+                            : null,
+                        child: const Text('Sign up'),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Already have an account? ',
+                              style: TextStyle(color: Colors.black)),
+                          TextButton(
+                            onPressed: () {
+                              // Handle login navigation
+                            },
+                            child: const Text('Log in'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-              const Text('Email address'),
-              const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text('Password'),
-              const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                  ),
-                  const Text('我不是機器人'),
-                  const Spacer(),
-                  Image.network(
-                    'https://www.gstatic.com/recaptcha/api2/logo_48.png',
-                    height: 30,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 16),
-                  ),
-                  child: const Text('Log In'),
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Center(
-                child: Text(
-                  '忘記密碼？',
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
