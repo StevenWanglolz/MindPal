@@ -25,10 +25,10 @@ class Register1 extends StatefulWidget {
   const Register1({super.key});
 
   @override
-  _Register1State createState() => _Register1State();
+  Register1State createState() => Register1State();
 }
 
-class _Register1State extends State<Register1> {
+class Register1State extends State<Register1> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();

@@ -4,10 +4,10 @@ class Register2 extends StatefulWidget {
   const Register2({super.key});
 
   @override
-  _Register2State createState() => _Register2State();
+  Register2State createState() => Register2State();
 }
 
-class _Register2State extends State<Register2> {
+class Register2State extends State<Register2> {
   String? gender;
   String? selectedMonth;
   String? selectedDate;
@@ -73,7 +73,7 @@ class _Register2State extends State<Register2> {
       ),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(15), // 16
           width: 400,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -92,7 +92,7 @@ class _Register2State extends State<Register2> {
                 '成為MindPal的諮商師...',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 15), // 16
               const Text('What\'s your gender?'),
               Row(
                 children: [
@@ -128,7 +128,7 @@ class _Register2State extends State<Register2> {
                   const Text('Non-binary'),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 15), // 16
               const Text('您的諮商證照發行日期'),
               Row(
                 children: [
@@ -181,7 +181,7 @@ class _Register2State extends State<Register2> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 15), // 16
               const Text('上傳諮商證照 格式限制：.pdf'),
               Row(
                 children: [
@@ -204,14 +204,14 @@ class _Register2State extends State<Register2> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 15), // 16
               const Text('諮商專長'),
               const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 15), // 16
               Row(
                 children: [
                   Checkbox(
@@ -239,7 +239,7 @@ class _Register2State extends State<Register2> {
                   )
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 15), // 16
               Center(
                 child: ElevatedButton(
                   onPressed: () {},
@@ -251,7 +251,7 @@ class _Register2State extends State<Register2> {
                   child: const Text('Sign up'),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 9), // 16
               Center(
                 child: TextButton(
                   onPressed: () {},
