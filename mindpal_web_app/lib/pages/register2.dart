@@ -1,27 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MindPal',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Register2(),
-      routes: {
-        '/signup': (context) => const Register2(),
-      },
-    );
-  }
-}
-
 class Register2 extends StatefulWidget {
   const Register2({super.key});
 
@@ -46,7 +24,6 @@ class Register2State extends State<Register2> {
           children: [
             Row(
               children: [
-                // Change the icon here
                 Image.asset(
                   'assets/images/brain.png', // Make sure you add your custom icon image in the assets folder and mention it in pubspec.yaml
                   height: 40,
@@ -71,16 +48,16 @@ class Register2State extends State<Register2> {
                       style: TextStyle(color: Colors.black)),
                 ),
                 const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register2');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                  ),
-                  child: const Text('Sign Up'),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/register1');
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.green,
+                //     padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   ),
+                //   child: const Text('Sign Up'),
+                // ),
               ],
             ),
           ],
@@ -262,7 +239,7 @@ class Register2State extends State<Register2> {
                               style: TextStyle(color: Colors.black)),
                           TextButton(
                             onPressed: () {
-                              // Handle login navigation
+                              Navigator.pushNamed(context, '/login');
                             },
                             child: const Text('Log in'),
                           ),

@@ -1,25 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MindPal',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const Register1(),
-    );
-  }
-}
-
 class Register1 extends StatefulWidget {
   const Register1({super.key});
 
@@ -46,9 +26,8 @@ class Register1State extends State<Register1> {
           children: [
             Row(
               children: [
-                // Change the icon here
                 Image.asset(
-                  'assets/images/brain.png', // Make sure you add your custom icon image in the assets folder and mention it in pubspec.yaml
+                  'assets/images/brain.png',
                   height: 40,
                 ),
                 const SizedBox(width: 10),
@@ -71,16 +50,16 @@ class Register1State extends State<Register1> {
                       style: TextStyle(color: Colors.black)),
                 ),
                 const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register2');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                  ),
-                  child: const Text('Sign Up'),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/register1');
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.green,
+                //     padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   ),
+                //   child: const Text('Sign Up'),
+                // ),
               ],
             ),
           ],
@@ -88,20 +67,18 @@ class Register1State extends State<Register1> {
       ),
       body: Row(
         children: <Widget>[
-          // Left side image or placeholder
           Expanded(
             flex: 1,
             child: Container(
               color: Colors.grey[200],
               child: Center(
                 child: Image.asset(
-                  'assets/images/Empty.png', // Replace with your image URL
+                  'assets/images/Empty.png',
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-          // Right side form
           Expanded(
             flex: 1,
             child: Padding(
@@ -182,7 +159,7 @@ class Register1State extends State<Register1> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Handle Log In action
+                        Navigator.pushNamed(context, '/login');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
