@@ -40,12 +40,15 @@ class Register2State extends State<Register2> {
             ),
             Row(
               children: [
-                TextButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/login');
                   },
-                  child: const Text('Log In',
-                      style: TextStyle(color: Colors.black)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  child: const Text('Log in'),
                 ),
                 const SizedBox(width: 10),
                 // ElevatedButton(

@@ -21,7 +21,7 @@ class RouteGenerator {
     _logger.d("Requested route: ${settings.name}");
 
     switch (settings.name) {
-      case '/':
+      case '/register1':
         _logger.d("Navigating to Register1 page");
         return MaterialPageRoute(builder: (_) => const Register1());
       case '/register2':
