@@ -16,37 +16,53 @@ class LoginPageState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
+        automaticallyImplyLeading: false, // No back button
         backgroundColor: Colors.white,
-        title: const Row(
+        elevation: 0,
+        toolbarHeight: 80,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey,
-              radius: 16,
+            Row(
+              children: [
+                Image.asset(
+                  'assets/images/brain.png',
+                  height: 40,
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  'MindPal',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-            SizedBox(width: 8),
-            Text(
-              'MindPal',
-              style: TextStyle(color: Colors.black),
+            Row(
+              children: [
+                // TextButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/login');
+                //   },
+                //   child: const Text('Log In',
+                //       style: TextStyle(color: Colors.black)),
+                // ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  child: const Text('Sign Up'),
+                ),
+              ],
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            child: Text('Log in', style: TextStyle(color: Colors.grey[600])),
-          ),
-          // TextButton(
-          //   onPressed: () {
-          //     Navigator.pushNamed(context, '/register1');
-          //   },
-          //   style: TextButton.styleFrom(
-          //     backgroundColor: Colors.green,
-          //   ),
-          //   child: const Text('Sign up', style: TextStyle(color: Colors.white)),
-          // ),
-        ],
       ),
       body: Center(
         child: Container(

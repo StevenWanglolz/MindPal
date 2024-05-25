@@ -18,6 +18,7 @@ class Register1State extends State<Register1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // No back button
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80,
