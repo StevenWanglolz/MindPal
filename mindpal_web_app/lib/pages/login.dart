@@ -8,8 +8,67 @@ class Login extends StatefulWidget {
 }
 
 class LoginPageState extends State<Login> {
-  bool isCounselor = true;
+  bool isCounselor = true; // True for Counselor, False for Administrator
   bool isChecked = false; // Variable to hold the checked state
+  bool isEmailEmpty = false;
+  bool isPasswordEmpty = false;
+  bool isRecaptchaEmpty = false; // Variable to hold the recaptcha state
+  String errorMessage = '';
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final Map<String, String> users = {
+    // Counselors
+    'counselor1@example.com': 'password123',
+    'counselor2@example.com': 'mypassword',
+    'counselor3@example.com': 'securepass',
+    // Administrators
+    'admin1@example.com': 'adminpass',
+    'admin2@example.com': 'admin123',
+    'admin3@example.com': 'adm!np@ss',
+  };
+
+  final Map<String, String> roles = {
+    // Counselors
+    'counselor1@example.com': 'counselor',
+    'counselor2@example.com': 'counselor',
+    'counselor3@example.com': 'counselor',
+    // Administrators
+    'admin1@example.com': 'admin',
+    'admin2@example.com': 'admin',
+    'admin3@example.com': 'admin',
+  };
+
+  void _login() {
+    setState(() {
+      isEmailEmpty = _emailController.text.isEmpty;
+      isPasswordEmpty = _passwordController.text.isEmpty;
+      isRecaptchaEmpty = !isChecked;
+
+      if (isEmailEmpty || isPasswordEmpty || isRecaptchaEmpty) {
+        errorMessage = '';
+        return;
+      }
+    });
+
+    // Determine the selected role
+    String selectedRole = isCounselor ? 'counselor' : 'admin';
+
+    // Perform validation based on the selected role
+    setState(() {
+      if (!users.containsKey(_emailController.text)) {
+        errorMessage = '此帳號不存在';
+      } else if (roles[_emailController.text] != selectedRole) {
+        errorMessage = '此帳號不存在';
+      } else if (users[_emailController.text] != _passwordController.text) {
+        errorMessage = '密碼錯誤';
+      } else {
+        errorMessage = '';
+        Navigator.pushNamed(context, '/nextPage');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +92,15 @@ class LoginPageState extends State<Login> {
                 const Text(
                   'MindPal',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
             Row(
               children: [
-                // TextButton(
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, '/login');
-                //   },
-                //   child: const Text('Log In',
-                //       style: TextStyle(color: Colors.black)),
-                // ),
-                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/register1');
@@ -66,8 +118,8 @@ class LoginPageState extends State<Login> {
       ),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.all(16),
-          width: 400,
+          padding: const EdgeInsets.all(12),
+          width: 360,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -96,93 +148,124 @@ class LoginPageState extends State<Login> {
                 color: Colors.black,
                 children: const [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Text('諮商師'),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Text('管理員'),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               const Center(
                 child: Text(
                   'Log In',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               const Text('Email address'),
-              const TextField(
+              TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: isEmailEmpty ? '此欄位不可為空' : null,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               const Text('Password'),
-              const TextField(
+              TextField(
+                controller: _passwordController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: isPasswordEmpty ? '此欄位不可為空' : null,
                 ),
                 obscureText: true,
               ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: isRecaptchaEmpty ? Colors.red : Colors.grey,
                   ),
-                  const Text('我不是機器人'),
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/recaptcha.png',
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      const Text(
-                        'reCAPTCHA',
-                        style: TextStyle(
-                          fontSize: 8,
-                          color: Colors.grey,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value!;
+                          if (isChecked) {
+                            isRecaptchaEmpty = false;
+                          }
+                        });
+                      },
+                    ),
+                    const Text('我不是機器人'),
+                    const Spacer(),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/recaptcha.png',
+                          height: 18,
+                          width: 18,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                      const Text(
-                        'Privacy - Terms',
-                        style: TextStyle(
-                          fontSize: 8,
-                          color: Colors.grey,
+                        const SizedBox(height: 2),
+                        const Text(
+                          'reCAPTCHA',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const Text(
+                          '隱私權 - 條款',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              if (errorMessage.isNotEmpty)
+                Center(
+                  child: Text(
+                    errorMessage,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
+              const SizedBox(height: 12),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 16),
+                        horizontal: 40, vertical: 12),
                   ),
                   child: const Text('Log In'),
                 ),
               ),
-              const SizedBox(height: 16),
-              const Center(
-                child: Text(
-                  '忘記密碼？',
-                  style: TextStyle(color: Colors.blue),
+              const SizedBox(height: 12),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    // Handle forgot password
+                  },
+                  child: const Text(
+                    '忘記密碼？',
+                    style: TextStyle(color: Colors.blue),
+                  ),
                 ),
               ),
             ],

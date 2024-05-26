@@ -51,16 +51,6 @@ class Register2State extends State<Register2> {
                   child: const Text('Log in'),
                 ),
                 const SizedBox(width: 10),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, '/register1');
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.green,
-                //     padding: const EdgeInsets.symmetric(horizontal: 20),
-                //   ),
-                //   child: const Text('Sign Up'),
-                // ),
               ],
             ),
           ],
