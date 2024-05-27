@@ -14,6 +14,38 @@ class Register1State extends State<Register1> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
+  bool isUsernameEmpty = false;
+  bool isEmailEmpty = false;
+  bool isPhoneEmpty = false;
+  bool isPasswordEmpty = false;
+  bool isPasswordValid = true;
+
+  void _validateAndProceed() {
+    setState(() {
+      isUsernameEmpty = _usernameController.text.isEmpty;
+      isEmailEmpty = _emailController.text.isEmpty;
+      isPhoneEmpty = _phoneController.text.isEmpty;
+      isPasswordEmpty = _passwordController.text.isEmpty;
+      isPasswordValid = _validatePassword(_passwordController.text);
+
+      if (!isUsernameEmpty &&
+          !isEmailEmpty &&
+          !isPhoneEmpty &&
+          !isPasswordEmpty &&
+          isPasswordValid) {
+        Navigator.pushNamed(context, '/register2');
+      }
+    });
+  }
+
+  bool _validatePassword(String password) {
+    if (password.length < 8) return false;
+    bool hasLetter = password.contains(RegExp(r'[A-Za-z]'));
+    bool hasDigit = password.contains(RegExp(r'\d'));
+    bool hasSpecialChar = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    return hasLetter && hasDigit && hasSpecialChar;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,16 +86,6 @@ class Register1State extends State<Register1> {
                   child: const Text('Log in'),
                 ),
                 const SizedBox(width: 10),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, '/register1');
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.green,
-                //     padding: const EdgeInsets.symmetric(horizontal: 20),
-                //   ),
-                //   child: const Text('Sign Up'),
-                // ),
               ],
             ),
           ],
@@ -86,7 +108,7 @@ class Register1State extends State<Register1> {
           Expanded(
             flex: 1,
             child: Padding(
-              padding: const EdgeInsets.all(32.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,37 +120,45 @@ class Register1State extends State<Register1> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 12),
                   TextField(
                     controller: _usernameController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '姓名',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
+                      errorText: isUsernameEmpty ? '此欄位不可為空' : null,
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 12),
                   TextField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Email address',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
+                      errorText: isEmailEmpty ? '此欄位不可為空' : null,
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 12),
                   TextField(
                     controller: _phoneController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: '電話',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
+                      errorText: isPhoneEmpty ? '此欄位不可為空' : null,
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 12.0),
                   TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       labelText: '密碼',
                       border: const OutlineInputBorder(),
+                      errorText: isPasswordEmpty
+                          ? '此欄位不可為空'
+                          : (!isPasswordValid
+                              ? '密碼必須包含至少8個字符，包括字母，數字和符號'
+                              : null),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
@@ -145,13 +175,11 @@ class Register1State extends State<Register1> {
                           'Use 8 or more characters with a mix of letters, numbers & symbols',
                     ),
                   ),
-                  const SizedBox(height: 24.0),
+                  const SizedBox(height: 20.0),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/register2');
-                    },
+                    onPressed: _validateAndProceed,
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 40),
                       backgroundColor: Colors.green,
                     ),
                     child: const Text('Next'),
