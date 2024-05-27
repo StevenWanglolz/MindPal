@@ -83,7 +83,7 @@ class Register1State extends State<Register1> {
                     backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
-                  child: const Text('Log in'),
+                  child: const Text('登入'),
                 ),
                 const SizedBox(width: 10),
               ],
@@ -116,7 +116,7 @@ class Register1State extends State<Register1> {
                   const Text(
                     '成為MindPal的諮商師...',
                     style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 23.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

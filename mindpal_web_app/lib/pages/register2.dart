@@ -9,13 +9,40 @@ class Register2 extends StatefulWidget {
 
 class Register2State extends State<Register2> {
   String? _selectedGender;
-  String _dateOfIssue = '';
+  String _selectedMonth = '';
+  String _selectedDate = '';
+  String _selectedYear = '';
   bool _agreedToTOS = false;
+
+  bool isGenderEmpty = false;
+  bool isDateOfIssueEmpty = false;
+  bool isSpecialtyEmpty = false;
+
+  final TextEditingController _specialtyController = TextEditingController();
+
+  void _validateAndProceed() {
+    setState(() {
+      isGenderEmpty = _selectedGender == null;
+      isDateOfIssueEmpty = _selectedMonth.isEmpty ||
+          _selectedDate.isEmpty ||
+          _selectedYear.isEmpty;
+      isSpecialtyEmpty = _specialtyController.text.isEmpty;
+
+      if (!isGenderEmpty &&
+          !isDateOfIssueEmpty &&
+          !isSpecialtyEmpty &&
+          _agreedToTOS) {
+        // Navigate to the next page or perform the sign-up action
+        Navigator.pushNamed(context, '/nextPage');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // No back button
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80,
@@ -25,16 +52,17 @@ class Register2State extends State<Register2> {
             Row(
               children: [
                 Image.asset(
-                  'assets/images/brain.png', // Make sure you add your custom icon image in the assets folder and mention it in pubspec.yaml
+                  'assets/images/brain.png',
                   height: 40,
                 ),
                 const SizedBox(width: 10),
                 const Text(
                   'MindPal',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -72,11 +100,15 @@ class Register2State extends State<Register2> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('成為MindPal的諮商師...',
-                        style: TextStyle(fontSize: 24)),
-                    const SizedBox(height: 20),
-                    const Text('What\'s your gender?',
-                        style: TextStyle(fontSize: 16)),
+                    const Text(
+                      '成為MindPal的諮商師...',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(height: 15),
+                    const Text(
+                      'What\'s your gender?',
+                      style: TextStyle(fontSize: 16),
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -87,6 +119,7 @@ class Register2State extends State<Register2> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedGender = value;
+                                isGenderEmpty = false;
                               });
                             },
                           ),
@@ -99,6 +132,7 @@ class Register2State extends State<Register2> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedGender = value;
+                                isGenderEmpty = false;
                               });
                             },
                           ),
@@ -111,20 +145,28 @@ class Register2State extends State<Register2> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedGender = value;
+                                isGenderEmpty = false;
                               });
                             },
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    if (isGenderEmpty)
+                      const Text(
+                        '此欄位不可為空',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(height: 16),
                     const Text('您的諮商證照發行日期', style: TextStyle(fontSize: 16)),
                     Row(
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            decoration:
-                                const InputDecoration(labelText: 'Month'),
+                            decoration: const InputDecoration(
+                              labelText: 'Month',
+                              border: OutlineInputBorder(),
+                            ),
                             items: List.generate(12, (index) {
                               return DropdownMenuItem(
                                 value: (index + 1).toString(),
@@ -133,15 +175,19 @@ class Register2State extends State<Register2> {
                             }),
                             onChanged: (value) {
                               setState(() {
-                                _dateOfIssue = value ?? '';
+                                _selectedMonth = value ?? '';
+                                isDateOfIssueEmpty = false;
                               });
                             },
                           ),
                         ),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            decoration:
-                                const InputDecoration(labelText: 'Date'),
+                            decoration: const InputDecoration(
+                              labelText: 'Date',
+                              border: OutlineInputBorder(),
+                            ),
                             items: List.generate(31, (index) {
                               return DropdownMenuItem(
                                 value: (index + 1).toString(),
@@ -150,15 +196,19 @@ class Register2State extends State<Register2> {
                             }),
                             onChanged: (value) {
                               setState(() {
-                                _dateOfIssue = value ?? '';
+                                _selectedDate = value ?? '';
+                                isDateOfIssueEmpty = false;
                               });
                             },
                           ),
                         ),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            decoration:
-                                const InputDecoration(labelText: 'Year'),
+                            decoration: const InputDecoration(
+                              labelText: 'Year',
+                              border: OutlineInputBorder(),
+                            ),
                             items: List.generate(50, (index) {
                               return DropdownMenuItem(
                                 value: (2024 - index).toString(),
@@ -167,25 +217,36 @@ class Register2State extends State<Register2> {
                             }),
                             onChanged: (value) {
                               setState(() {
-                                _dateOfIssue = value ?? '';
+                                _selectedYear = value ?? '';
+                                isDateOfIssueEmpty = false;
                               });
                             },
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    if (isDateOfIssueEmpty)
+                      const Text(
+                        '此欄位不可為空',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _specialtyController,
+                      decoration: InputDecoration(
+                        labelText: '諮商專長',
+                        border: const OutlineInputBorder(),
+                        errorText: isSpecialtyEmpty ? '此欄位不可為空' : null,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         // Handle file upload
                       },
                       child: const Text('選擇檔案'),
                     ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: '諮商專長'),
-                    ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Row(
                       children: [
                         Checkbox(
@@ -212,24 +273,26 @@ class Register2State extends State<Register2> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Center(
                       child: ElevatedButton(
-                        onPressed: _agreedToTOS
-                            ? () {
-                                // Handle sign up
-                              }
-                            : null,
+                        onPressed: _agreedToTOS ? _validateAndProceed : null,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 40),
+                          backgroundColor: Colors.green,
+                        ),
                         child: const Text('Sign up'),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Already have an account? ',
-                              style: TextStyle(color: Colors.black)),
+                          const Text(
+                            'Already have an account? ',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/login');
