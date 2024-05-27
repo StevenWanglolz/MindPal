@@ -109,7 +109,7 @@ class LoginPageState extends State<Login> {
                     backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
-                  child: const Text('Sign Up'),
+                  child: const Text('登入'),
                 ),
               ],
             ),

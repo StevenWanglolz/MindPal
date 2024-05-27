@@ -39,7 +39,7 @@ class Register1State extends State<Register1> {
   }
 
   bool _validatePassword(String password) {
-    if (password.length < 8) return false;
+    if (password.length < 6) return false;
     bool hasLetter = password.contains(RegExp(r'[A-Za-z]'));
     bool hasDigit = password.contains(RegExp(r'\d'));
     bool hasSpecialChar = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
@@ -133,7 +133,7 @@ class Register1State extends State<Register1> {
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: 'Email address',
+                      labelText: '電子信箱',
                       border: const OutlineInputBorder(),
                       errorText: isEmailEmpty ? '此欄位不可為空' : null,
                     ),
@@ -157,7 +157,7 @@ class Register1State extends State<Register1> {
                       errorText: isPasswordEmpty
                           ? '此欄位不可為空'
                           : (!isPasswordValid
-                              ? '密碼必須包含至少8個字符，包括字母，數字和符號'
+                              ? '密碼必須包含至少6個字符，包括字母，數字和符號'
                               : null),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -182,11 +182,11 @@ class Register1State extends State<Register1> {
                       minimumSize: const Size(double.infinity, 40),
                       backgroundColor: Colors.green,
                     ),
-                    child: const Text('Next'),
+                    child: const Text('下一頁'),
                   ),
                   const SizedBox(height: 16.0),
                   const Center(
-                    child: Text('Already have an account?'),
+                    child: Text('已用有帳號?'),
                   ),
                   Center(
                     child: ElevatedButton(
@@ -198,7 +198,7 @@ class Register1State extends State<Register1> {
                         elevation: 0,
                       ),
                       child: const Text(
-                        'Log In',
+                        '登入',
                         style: TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
