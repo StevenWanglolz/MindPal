@@ -32,7 +32,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const Login());
       case '/forget_password':
         _logger.d("Navigating to ForgetPassword");
-          return MaterialPageRoute(builder = (_)) => const ForgotPassword();
+      // return MaterialPageRoute(builder = (_)) => const ForgotPassword();
       default:
         _logger.w("Route not found, showing error page");
         return _errorRoute();
