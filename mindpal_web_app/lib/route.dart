@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/register1.dart';
 import 'pages/register2.dart';
 import 'pages/login.dart';
-
+import 'pages/forgot_password.dart';
 import 'package:logger/logger.dart';
 
 class RouteGenerator {
@@ -30,6 +30,10 @@ class RouteGenerator {
       case '/login':
         _logger.d("Navigating to Login page");
         return MaterialPageRoute(builder: (_) => const Login());
+      case '/forgot_password':
+        _logger.d(
+            "Navigating to Forgot password page"); // Ensure _logger is defined if used
+        return MaterialPageRoute(builder: (_) => const ForgotPassword());
       default:
         _logger.w("Route not found, showing error page");
         return _errorRoute();

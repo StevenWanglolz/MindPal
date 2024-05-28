@@ -73,19 +73,19 @@ class Register1State extends State<Register1> {
                 ),
               ],
             ),
-            Row(
+            const Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                  ),
-                  child: const Text('登入'),
-                ),
-                const SizedBox(width: 10),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/login');
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.green,
+                //     padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   ),
+                //   child: const Text('登入'),
+                // ),
+                SizedBox(width: 10),
               ],
             ),
           ],
@@ -171,8 +171,7 @@ class Register1State extends State<Register1> {
                           });
                         },
                       ),
-                      helperText:
-                          'Use 8 or more characters with a mix of letters, numbers & symbols',
+                      helperText: '密碼必須包含至少6個字符，包括字母，數字和符號',
                     ),
                   ),
                   const SizedBox(height: 20.0),

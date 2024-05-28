@@ -160,12 +160,12 @@ class LoginPageState extends State<Login> {
               const SizedBox(height: 12),
               const Center(
                 child: Text(
-                  'Log In',
+                  '登入',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 12),
-              const Text('Email address'),
+              const Text('電子郵件'),
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -174,7 +174,7 @@ class LoginPageState extends State<Login> {
                 ),
               ),
               const SizedBox(height: 12),
-              const Text('Password'),
+              const Text('密碼'),
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
@@ -253,14 +253,14 @@ class LoginPageState extends State<Login> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 12),
                   ),
-                  child: const Text('Log In'),
+                  child: const Text('登入'),
                 ),
               ),
               const SizedBox(height: 12),
               Center(
                 child: TextButton(
                   onPressed: () {
-                    // Handle forgot password
+                    Navigator.pushNamed(context, '/forgot_password');
                   },
                   child: const Text(
                     '忘記密碼？',
