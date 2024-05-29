@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'route.dart';
 
-void main() {
+void main() async {
+  // await dotenv.load(fileName: "confidential/.env");
   runApp(const MyApp());
 }
 
@@ -11,12 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Navigation Example',
+      title: 'MindPal',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      initialRoute: '/register1',
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

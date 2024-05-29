@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'other/email_validator.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
+class EmailVerification extends StatefulWidget {
+  const EmailVerification({super.key});
 
   @override
-  ForgotPasswordState createState() => ForgotPasswordState();
+  EmailVerificationState createState() => EmailVerificationState();
 }
 
-class ForgotPasswordState extends State<ForgotPassword> {
+class EmailVerificationState extends State<EmailVerification> {
   final TextEditingController _emailController = TextEditingController();
   bool isEmailValid = true;
   bool isEmailEmpty = false;
 
+  final List<String> validEmails = [
+    'example1@example.com',
+    'example2@example.com',
+    'example3@example.com',
+    'example4@example.com',
+    'example5@example.com'
+  ];
+
   void _validateEmail() {
     setState(() {
       isEmailEmpty = _emailController.text.isEmpty;
-      isEmailValid = EmailValidator.validate(_emailController.text);
+      isEmailValid = validEmails.contains(_emailController.text);
       if (!isEmailEmpty && isEmailValid) {
         Navigator.pushNamed(context, '/codeVerification',
             arguments: _emailController.text);
@@ -106,24 +112,18 @@ class ForgotPasswordState extends State<ForgotPassword> {
                   border: const OutlineInputBorder(),
                   errorText: isEmailEmpty
                       ? '此欄位不可為空'
-                      : (isEmailValid ? null : 'Email is not valid'),
-                  suffixIcon: SizedBox(
-                    width: 100,
-                    child: ElevatedButton(
-                      onPressed: _validateEmail,
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.green,
-                        padding: EdgeInsets.zero,
-                        textStyle: const TextStyle(fontSize: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      child: const Text('傳送驗證碼'),
-                    ),
-                  ),
+                      : (isEmailValid ? null : '此電子郵件不存在'),
                 ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _validateEmail,
+                style: ElevatedButton.styleFrom(
+                  minimumSize:
+                      const Size(double.infinity, 40), // Adjusted height
+                  backgroundColor: Colors.green,
+                ),
+                child: const Text('下一步'),
               ),
             ],
           ),

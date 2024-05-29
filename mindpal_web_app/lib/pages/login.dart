@@ -260,7 +260,7 @@ class LoginPageState extends State<Login> {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/forgot_password');
+                    Navigator.pushNamed(context, '/emailVerification');
                   },
                   child: const Text(
                     '忘記密碼？',
