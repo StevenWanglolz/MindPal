@@ -9,7 +9,7 @@ import 'pages/register2.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case '/register1':
         return MaterialPageRoute(builder: (_) => const Register1());
       case '/emailVerification':
         return MaterialPageRoute(builder: (_) => const EmailVerification());

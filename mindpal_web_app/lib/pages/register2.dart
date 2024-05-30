@@ -66,19 +66,19 @@ class Register2State extends State<Register2> {
                 ),
               ],
             ),
-            Row(
+            const Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                  ),
-                  child: const Text('Log in'),
-                ),
-                const SizedBox(width: 10),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/login');
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.green,
+                //     padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   ),
+                //   child: const Text('Log in'),
+                // ),
+                SizedBox(width: 10),
               ],
             ),
           ],
@@ -106,15 +106,15 @@ class Register2State extends State<Register2> {
                     ),
                     const SizedBox(height: 15),
                     const Text(
-                      'What\'s your gender?',
+                      '你的性別是?',
                       style: TextStyle(fontSize: 16),
                     ),
                     Row(
                       children: [
                         Expanded(
                           child: RadioListTile<String>(
-                            title: const Text('Female'),
-                            value: 'Female',
+                            title: const Text('女性'),
+                            value: '男性',
                             groupValue: _selectedGender,
                             onChanged: (value) {
                               setState(() {
@@ -126,8 +126,8 @@ class Register2State extends State<Register2> {
                         ),
                         Expanded(
                           child: RadioListTile<String>(
-                            title: const Text('Male'),
-                            value: 'Male',
+                            title: const Text('男性'),
+                            value: '男性',
                             groupValue: _selectedGender,
                             onChanged: (value) {
                               setState(() {
@@ -139,8 +139,8 @@ class Register2State extends State<Register2> {
                         ),
                         Expanded(
                           child: RadioListTile<String>(
-                            title: const Text('Non-binary'),
-                            value: 'Non-binary',
+                            title: const Text('其他'),
+                            value: '其他',
                             groupValue: _selectedGender,
                             onChanged: (value) {
                               setState(() {
@@ -164,7 +164,7 @@ class Register2State extends State<Register2> {
                         Expanded(
                           child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
-                              labelText: 'Month',
+                              labelText: '月',
                               border: OutlineInputBorder(),
                             ),
                             items: List.generate(12, (index) {
@@ -185,7 +185,7 @@ class Register2State extends State<Register2> {
                         Expanded(
                           child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
-                              labelText: 'Date',
+                              labelText: '日',
                               border: OutlineInputBorder(),
                             ),
                             items: List.generate(31, (index) {
@@ -206,7 +206,7 @@ class Register2State extends State<Register2> {
                         Expanded(
                           child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
-                              labelText: 'Year',
+                              labelText: '年',
                               border: OutlineInputBorder(),
                             ),
                             items: List.generate(50, (index) {
@@ -290,14 +290,14 @@ class Register2State extends State<Register2> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Already have an account? ',
+                            '已經有帳號了嗎? ',
                             style: TextStyle(color: Colors.black),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/login');
                             },
-                            child: const Text('Log in'),
+                            child: const Text('登入'),
                           ),
                         ],
                       ),
