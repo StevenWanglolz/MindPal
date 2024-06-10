@@ -55,7 +55,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/images/brain.png
+    - assets/images/logo.png
     - assets/images/Empty.png
     - assets/images/recaptcha.png
   # The following line ensures that the Material Icons font is

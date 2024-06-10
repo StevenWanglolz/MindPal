@@ -58,18 +58,22 @@ class Register1State extends State<Register1> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'assets/images/brain.png',
-                  height: 40,
+                SizedBox(
+                  width: 55,
+                  height: 55,
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                  ),
                 ),
-                const SizedBox(width: 10),
                 const Text(
                   'MindPal',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -190,7 +194,7 @@ class Register1State extends State<Register1> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.pushNamed(context, '/counselorLogin');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,

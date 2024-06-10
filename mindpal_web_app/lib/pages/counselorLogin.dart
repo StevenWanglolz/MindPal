@@ -1,43 +1,26 @@
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class CounselorLogin extends StatefulWidget {
+  const CounselorLogin({super.key});
 
   @override
-  LoginPageState createState() => LoginPageState();
+  CounselorLoginPageState createState() => CounselorLoginPageState();
 }
 
-class LoginPageState extends State<Login> {
-  bool isCounselor = true; // True for Counselor, False for Administrator
-  bool isChecked = false; // Variable to hold the checked state
+class CounselorLoginPageState extends State<CounselorLogin> {
+  bool isChecked = false;
   bool isEmailEmpty = false;
   bool isPasswordEmpty = false;
-  bool isRecaptchaEmpty = false; // Variable to hold the recaptcha state
+  bool isRecaptchaEmpty = false;
   String errorMessage = '';
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final Map<String, String> users = {
-    // Counselors
     'counselor1@example.com': 'password123',
     'counselor2@example.com': 'mypassword',
     'counselor3@example.com': 'securepass',
-    // Administrators
-    'admin1@example.com': 'adminpass',
-    'admin2@example.com': 'admin123',
-    'admin3@example.com': 'adm!np@ss',
-  };
-
-  final Map<String, String> roles = {
-    // Counselors
-    'counselor1@example.com': 'counselor',
-    'counselor2@example.com': 'counselor',
-    'counselor3@example.com': 'counselor',
-    // Administrators
-    'admin1@example.com': 'admin',
-    'admin2@example.com': 'admin',
-    'admin3@example.com': 'admin',
   };
 
   void _login() {
@@ -50,16 +33,8 @@ class LoginPageState extends State<Login> {
         errorMessage = '';
         return;
       }
-    });
 
-    // Determine the selected role
-    String selectedRole = isCounselor ? 'counselor' : 'admin';
-
-    // Perform validation based on the selected role
-    setState(() {
       if (!users.containsKey(_emailController.text)) {
-        errorMessage = '此帳號不存在';
-      } else if (roles[_emailController.text] != selectedRole) {
         errorMessage = '此帳號不存在';
       } else if (users[_emailController.text] != _passwordController.text) {
         errorMessage = '密碼錯誤';
@@ -75,7 +50,7 @@ class LoginPageState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        automaticallyImplyLeading: false, // No back button
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80,
@@ -99,19 +74,15 @@ class LoginPageState extends State<Login> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register1');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                  ),
-                  child: const Text('註冊'),
-                ),
-              ],
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/register1');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+              ),
+              child: const Text('註冊'),
             ),
           ],
         ),
@@ -134,33 +105,9 @@ class LoginPageState extends State<Login> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ToggleButtons(
-                isSelected: [isCounselor, !isCounselor],
-                onPressed: (index) {
-                  setState(() {
-                    isCounselor = index == 0;
-                  });
-                },
-                borderRadius: BorderRadius.circular(8),
-                selectedBorderColor: Colors.green,
-                selectedColor: Colors.white,
-                fillColor: Colors.green,
-                color: Colors.black,
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Text('諮商師'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Text('管理員'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
               const Center(
                 child: Text(
-                  '登入',
+                  '諮商師登入',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -186,55 +133,55 @@ class LoginPageState extends State<Login> {
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: isRecaptchaEmpty ? Colors.red : Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          isChecked = value!;
-                          if (isChecked) {
-                            isRecaptchaEmpty = false;
-                          }
-                        });
-                      },
+                decoration: const BoxDecoration(
+                    // border: Border.all(
+                    //   color: isRecaptchaEmpty ? Colors.red : Colors.grey,
+                    // ),
+                    // borderRadius: BorderRadius.circular(5),
                     ),
-                    const Text('我不是機器人'),
-                    const Spacer(),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          'assets/images/recaptcha.png',
-                          height: 18,
-                          width: 18,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(height: 2),
-                        const Text(
-                          'reCAPTCHA',
-                          style: TextStyle(
-                            fontSize: 8,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const Text(
-                          '隱私權 - 條款',
-                          style: TextStyle(
-                            fontSize: 8,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                // child: Row(
+                //   children: [
+                //     Checkbox(
+                //       value: isChecked,
+                //       onChanged: (value) {
+                //         setState(() {
+                //           isChecked = value!;
+                //           if (isChecked) {
+                //             isRecaptchaEmpty = false;
+                //           }
+                //         });
+                //       },
+                //     ),
+                //     const Text('我不是機器人'),
+                //     const Spacer(),
+                //     Column(
+                //       mainAxisSize: MainAxisSize.min,
+                //       children: [
+                //         Image.asset(
+                //           'assets/images/recaptcha.png',
+                //           height: 18,
+                //           width: 18,
+                //           fit: BoxFit.cover,
+                //         ),
+                //         const SizedBox(height: 2),
+                //         const Text(
+                //           'reCAPTCHA',
+                //           style: TextStyle(
+                //             fontSize: 8,
+                //             color: Colors.grey,
+                //           ),
+                //         ),
+                //         const Text(
+                //           '隱私權 - 條款',
+                //           style: TextStyle(
+                //             fontSize: 8,
+                //             color: Colors.grey,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ],
+                // ),
               ),
               const SizedBox(height: 12),
               if (errorMessage.isNotEmpty)

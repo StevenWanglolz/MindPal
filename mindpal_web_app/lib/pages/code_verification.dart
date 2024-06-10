@@ -113,35 +113,43 @@ class CodeVerificationState extends State<CodeVerification> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false, // No back button
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.grey,
-                  radius: 20,
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 40,
                 ),
-                SizedBox(width: 10),
-                Text(
+                const SizedBox(width: 10),
+                const Text(
                   'MindPal',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: Text('Log in', style: TextStyle(color: Colors.grey[600])),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/counselorLogin');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  child: const Text('登入'),
+                ),
+                const SizedBox(width: 10),
+              ],
             ),
           ],
         ),
@@ -164,17 +172,17 @@ class CodeVerificationState extends State<CodeVerification> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.topLeft,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Back',
-                    style: TextStyle(color: Colors.green),
-                  ),
-                ),
+                // child: TextButton(
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                //   child: const Text(
+                //     'Back',
+                //     style: TextStyle(color: Colors.green),
+                //   ),
+                // ),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -192,33 +200,38 @@ class CodeVerificationState extends State<CodeVerification> {
                 ),
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _validateCode,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(150, 40), // Smaller size
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 12), // Adjusted padding
-                ),
-                child: const Text('確認'),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: isTimerRunning
-                    ? null
-                    : () {
-                        _sendVerificationCode();
-                        _startTimer();
-                      },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(150, 40), // Smaller size
-                  backgroundColor: isTimerRunning ? Colors.grey : Colors.green,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 12), // Adjusted padding
-                ),
-                child: isTimerRunning
-                    ? Text("$countdown 後可重新送出")
-                    : const Text('傳送驗證碼'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: isTimerRunning
+                        ? null
+                        : () {
+                            _sendVerificationCode();
+                            _startTimer();
+                          },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(150, 40), // Smaller size
+                      backgroundColor:
+                          isTimerRunning ? Colors.grey : Colors.green,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12), // Adjusted padding
+                    ),
+                    child: isTimerRunning
+                        ? Text("$countdown 後可重新送出")
+                        : const Text('傳送驗證碼'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _validateCode,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(150, 40), // Smaller size
+                      backgroundColor: Colors.green,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12), // Adjusted padding
+                    ),
+                    child: const Text('確認'),
+                  ),
+                ],
               ),
             ],
           ),

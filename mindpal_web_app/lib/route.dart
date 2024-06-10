@@ -5,6 +5,8 @@ import 'pages/password_reset.dart';
 import 'pages/login.dart';
 import 'pages/register1.dart';
 import 'pages/register2.dart';
+import 'pages/counselorLogin.dart';
+import 'pages/adminLogin.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,10 +19,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CodeVerification());
       case '/passwordReset':
         return MaterialPageRoute(builder: (_) => const PasswordReset());
-      case '/login':
-        return MaterialPageRoute(builder: (_) => const Login());
+      // case '/login':
+      //   return MaterialPageRoute(builder: (_) => const Login());
       case '/register2':
         return MaterialPageRoute(builder: (_) => const Register2());
+      case '/counselorLogin':
+        return MaterialPageRoute(builder: (_) => const CounselorLogin());
       default:
         return _errorRoute();
     }

@@ -52,7 +52,7 @@ class Register2State extends State<Register2> {
             Row(
               children: [
                 Image.asset(
-                  'assets/images/brain.png',
+                  'assets/images/logo.png',
                   height: 40,
                 ),
                 const SizedBox(width: 10),
@@ -295,7 +295,7 @@ class Register2State extends State<Register2> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/login');
+                              Navigator.pushNamed(context, '/counselorLogin');
                             },
                             child: const Text('登入'),
                           ),

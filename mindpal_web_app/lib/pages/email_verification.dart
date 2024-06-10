@@ -17,7 +17,8 @@ class EmailVerificationState extends State<EmailVerification> {
     'example2@example.com',
     'example3@example.com',
     'example4@example.com',
-    'example5@example.com'
+    'example5@example.com',
+    'a'
   ];
 
   void _validateEmail() {
@@ -36,35 +37,43 @@ class EmailVerificationState extends State<EmailVerification> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false, // No back button
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.grey,
-                  radius: 20,
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 40,
                 ),
-                SizedBox(width: 10),
-                Text(
+                const SizedBox(width: 10),
+                const Text(
                   'MindPal',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: Text('Log in', style: TextStyle(color: Colors.grey[600])),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/counselorLogin');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  child: const Text('登入'),
+                ),
+                const SizedBox(width: 10),
+              ],
             ),
           ],
         ),
@@ -87,17 +96,17 @@ class EmailVerificationState extends State<EmailVerification> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.topLeft,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Back',
-                    style: TextStyle(color: Colors.green),
-                  ),
-                ),
+                // child: TextButton(
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                //   child: const Text(
+                //     'Back',
+                //     style: TextStyle(color: Colors.green),
+                //   ),
+                // ),
               ),
               const SizedBox(height: 16),
               const Text(
