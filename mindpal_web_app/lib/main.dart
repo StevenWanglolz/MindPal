@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/register1',
+      initialRoute: '/adminLogin',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

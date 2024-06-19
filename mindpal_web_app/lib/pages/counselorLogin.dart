@@ -4,10 +4,10 @@ class CounselorLogin extends StatefulWidget {
   const CounselorLogin({super.key});
 
   @override
-  CounselorLoginPageState createState() => CounselorLoginPageState();
+  CounselorLoginState createState() => CounselorLoginState();
 }
 
-class CounselorLoginPageState extends State<CounselorLogin> {
+class CounselorLoginState extends State<CounselorLogin> {
   bool isChecked = false;
   bool isEmailEmpty = false;
   bool isPasswordEmpty = false;
@@ -21,6 +21,7 @@ class CounselorLoginPageState extends State<CounselorLogin> {
     'counselor1@example.com': 'password123',
     'counselor2@example.com': 'mypassword',
     'counselor3@example.com': 'securepass',
+    'a': 'b'
   };
 
   void _login() {
@@ -30,17 +31,17 @@ class CounselorLoginPageState extends State<CounselorLogin> {
       isRecaptchaEmpty = !isChecked;
 
       if (isEmailEmpty || isPasswordEmpty || isRecaptchaEmpty) {
-        errorMessage = '';
+        errorMessage = '請填寫所有欄位並確認你不是機器人';
         return;
       }
 
       if (!users.containsKey(_emailController.text)) {
-        errorMessage = '此帳號不存在';
+        errorMessage = '帳號不存在';
       } else if (users[_emailController.text] != _passwordController.text) {
         errorMessage = '密碼錯誤';
       } else {
         errorMessage = '';
-        Navigator.pushNamed(context, '/nextPage');
+        Navigator.pushNamed(context, '/counselorMain');
       }
     });
   }
@@ -133,55 +134,55 @@ class CounselorLoginPageState extends State<CounselorLogin> {
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(4.0),
-                decoration: const BoxDecoration(
-                    // border: Border.all(
-                    //   color: isRecaptchaEmpty ? Colors.red : Colors.grey,
-                    // ),
-                    // borderRadius: BorderRadius.circular(5),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: isRecaptchaEmpty ? Colors.red : Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value!;
+                          if (isChecked) {
+                            isRecaptchaEmpty = false;
+                          }
+                        });
+                      },
                     ),
-                // child: Row(
-                //   children: [
-                //     Checkbox(
-                //       value: isChecked,
-                //       onChanged: (value) {
-                //         setState(() {
-                //           isChecked = value!;
-                //           if (isChecked) {
-                //             isRecaptchaEmpty = false;
-                //           }
-                //         });
-                //       },
-                //     ),
-                //     const Text('我不是機器人'),
-                //     const Spacer(),
-                //     Column(
-                //       mainAxisSize: MainAxisSize.min,
-                //       children: [
-                //         Image.asset(
-                //           'assets/images/recaptcha.png',
-                //           height: 18,
-                //           width: 18,
-                //           fit: BoxFit.cover,
-                //         ),
-                //         const SizedBox(height: 2),
-                //         const Text(
-                //           'reCAPTCHA',
-                //           style: TextStyle(
-                //             fontSize: 8,
-                //             color: Colors.grey,
-                //           ),
-                //         ),
-                //         const Text(
-                //           '隱私權 - 條款',
-                //           style: TextStyle(
-                //             fontSize: 8,
-                //             color: Colors.grey,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ],
-                // ),
+                    const Text('我不是機器人'),
+                    const Spacer(),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/recaptcha.png',
+                          height: 18,
+                          width: 18,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(height: 2),
+                        const Text(
+                          'reCAPTCHA',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const Text(
+                          '隱私權 - 條款',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 12),
               if (errorMessage.isNotEmpty)
@@ -207,7 +208,7 @@ class CounselorLoginPageState extends State<CounselorLogin> {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/emailVerification');
+                    Navigator.pushNamed(context, '/counselorMain');
                   },
                   child: const Text(
                     '忘記密碼？',

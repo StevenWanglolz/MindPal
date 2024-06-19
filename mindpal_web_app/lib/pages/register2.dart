@@ -8,41 +8,30 @@ class Register2 extends StatefulWidget {
 }
 
 class Register2State extends State<Register2> {
-  String? _selectedGender;
-  String _selectedMonth = '';
-  String _selectedDate = '';
-  String _selectedYear = '';
-  bool _agreedToTOS = false;
-
-  bool isGenderEmpty = false;
-  bool isDateOfIssueEmpty = false;
-  bool isSpecialtyEmpty = false;
-
   final TextEditingController _specialtyController = TextEditingController();
+  Set<String> _selectedSpecialties = {};
 
-  void _validateAndProceed() {
-    setState(() {
-      isGenderEmpty = _selectedGender == null;
-      isDateOfIssueEmpty = _selectedMonth.isEmpty ||
-          _selectedDate.isEmpty ||
-          _selectedYear.isEmpty;
-      isSpecialtyEmpty = _specialtyController.text.isEmpty;
-
-      if (!isGenderEmpty &&
-          !isDateOfIssueEmpty &&
-          !isSpecialtyEmpty &&
-          _agreedToTOS) {
-        // Navigate to the next page or perform the sign-up action
-        Navigator.pushNamed(context, '/nextPage');
-      }
-    });
-  }
+  final List<String> _specialties = [
+    '人際關係',
+    '心理健康',
+    '職業發展',
+    '婚姻家庭',
+    '青少年',
+    '成癮問題',
+    '壓力管理',
+    '自尊心',
+    '創傷治療',
+    '失眠問題',
+    '飲食障礙',
+    '其他',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        automaticallyImplyLeading: false, // No back button
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         toolbarHeight: 80,
@@ -55,7 +44,7 @@ class Register2State extends State<Register2> {
                   'assets/images/logo.png',
                   height: 40,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 5),
                 const Text(
                   'MindPal',
                   style: TextStyle(
@@ -95,211 +84,202 @@ class Register2State extends State<Register2> {
           Expanded(
             flex: 1,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(32.0),
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     const Text(
                       '成為MindPal的諮商師...',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      '你的性別是?',
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    const SizedBox(height: 16.0),
+                    const Text('What\'s your gender?'),
                     Row(
                       children: [
                         Expanded(
                           child: RadioListTile<String>(
-                            title: const Text('女性'),
-                            value: '男性',
-                            groupValue: _selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedGender = value;
-                                isGenderEmpty = false;
-                              });
-                            },
+                            title: const Text('Female'),
+                            value: 'Female',
+                            groupValue: null,
+                            onChanged: (value) {},
                           ),
                         ),
                         Expanded(
                           child: RadioListTile<String>(
-                            title: const Text('男性'),
-                            value: '男性',
-                            groupValue: _selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedGender = value;
-                                isGenderEmpty = false;
-                              });
-                            },
+                            title: const Text('Male'),
+                            value: 'Male',
+                            groupValue: null,
+                            onChanged: (value) {},
                           ),
                         ),
                         Expanded(
                           child: RadioListTile<String>(
-                            title: const Text('其他'),
-                            value: '其他',
-                            groupValue: _selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedGender = value;
-                                isGenderEmpty = false;
-                              });
-                            },
+                            title: const Text('Non-binary'),
+                            value: 'Non-binary',
+                            groupValue: null,
+                            onChanged: (value) {},
                           ),
                         ),
                       ],
                     ),
-                    if (isGenderEmpty)
-                      const Text(
-                        '此欄位不可為空',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    const SizedBox(height: 16),
-                    const Text('您的諮商證照發行日期', style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 16.0),
+                    const Text('您的諮商證照發行日期'),
                     Row(
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            decoration: const InputDecoration(
-                              labelText: '月',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration:
+                                const InputDecoration(labelText: 'Month'),
                             items: List.generate(12, (index) {
                               return DropdownMenuItem(
                                 value: (index + 1).toString(),
                                 child: Text((index + 1).toString()),
                               );
                             }),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedMonth = value ?? '';
-                                isDateOfIssueEmpty = false;
-                              });
-                            },
+                            onChanged: (value) {},
                           ),
                         ),
-                        const SizedBox(width: 8),
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            decoration: const InputDecoration(
-                              labelText: '日',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration:
+                                const InputDecoration(labelText: 'Date'),
                             items: List.generate(31, (index) {
                               return DropdownMenuItem(
                                 value: (index + 1).toString(),
                                 child: Text((index + 1).toString()),
                               );
                             }),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedDate = value ?? '';
-                                isDateOfIssueEmpty = false;
-                              });
-                            },
+                            onChanged: (value) {},
                           ),
                         ),
-                        const SizedBox(width: 8),
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            decoration: const InputDecoration(
-                              labelText: '年',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration:
+                                const InputDecoration(labelText: 'Year'),
                             items: List.generate(50, (index) {
                               return DropdownMenuItem(
                                 value: (2024 - index).toString(),
                                 child: Text((2024 - index).toString()),
                               );
                             }),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedYear = value ?? '';
-                                isDateOfIssueEmpty = false;
-                              });
-                            },
+                            onChanged: (value) {},
                           ),
                         ),
                       ],
                     ),
-                    if (isDateOfIssueEmpty)
-                      const Text(
-                        '此欄位不可為空',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _specialtyController,
-                      decoration: InputDecoration(
-                        labelText: '諮商專長',
-                        border: const OutlineInputBorder(),
-                        errorText: isSpecialtyEmpty ? '此欄位不可為空' : null,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle file upload
-                      },
-                      child: const Text('選擇檔案'),
-                    ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 16.0),
                     Row(
                       children: [
-                        Checkbox(
-                          value: _agreedToTOS,
-                          onChanged: (value) {
-                            setState(() {
-                              _agreedToTOS = value ?? false;
-                            });
-                          },
+                        const Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: '上傳諮商證照 格式限制: .pdf',
+                              border: OutlineInputBorder(),
+                            ),
+                            readOnly: true,
+                          ),
                         ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                          ),
+                          child: const Text('選擇檔案'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _specialtyController,
+                            decoration: const InputDecoration(
+                              labelText: '諮商專長',
+                              border: OutlineInputBorder(),
+                            ),
+                            readOnly: true,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () async {
+                            final result = await showDialog<Set<String>>(
+                              context: context,
+                              builder: (context) {
+                                return SpecialtySelectionDialog(
+                                  initialSpecialties: _selectedSpecialties,
+                                  specialties: _specialties,
+                                );
+                              },
+                            );
+
+                            if (result != null) {
+                              setState(() {
+                                _selectedSpecialties = result;
+                                _specialtyController.text =
+                                    _selectedSpecialties.join(', ');
+                              });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                          ),
+                          child: const Text('選擇專長'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16.0),
+                    Row(
+                      children: [
+                        Checkbox(value: false, onChanged: (value) {}),
                         const Text('Agree to our '),
                         TextButton(
-                          onPressed: () {
-                            // Handle terms of use navigation
-                          },
+                          onPressed: () {},
                           child: const Text('Terms of use'),
                         ),
                         const Text(' and '),
                         TextButton(
-                          onPressed: () {
-                            // Handle privacy policy navigation
-                          },
+                          onPressed: () {},
                           child: const Text('Privacy Policy'),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        backgroundColor: Colors.green,
+                      ),
+                      child: const Text('Sign up'),
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Center(
+                      child: Text('Already have an account?'),
+                    ),
                     Center(
                       child: ElevatedButton(
-                        onPressed: _agreedToTOS ? _validateAndProceed : null,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/counselorLogin');
+                        },
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 40),
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
                         ),
-                        child: const Text('Sign up'),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            '已經有帳號了嗎? ',
-                            style: TextStyle(color: Colors.black),
+                        child: const Text(
+                          'Log In',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/counselorLogin');
-                            },
-                            child: const Text('登入'),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
@@ -308,6 +288,103 @@ class Register2State extends State<Register2> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SpecialtySelectionDialog extends StatefulWidget {
+  final List<String> specialties;
+  final Set<String> initialSpecialties;
+
+  const SpecialtySelectionDialog({
+    required this.specialties,
+    required this.initialSpecialties,
+    super.key,
+  });
+
+  @override
+  State<SpecialtySelectionDialog> createState() =>
+      _SpecialtySelectionDialogState();
+}
+
+class _SpecialtySelectionDialogState extends State<SpecialtySelectionDialog> {
+  late Set<String> _selectedSpecialties;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedSpecialties = Set.from(widget.initialSpecialties);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  '返回',
+                  style: TextStyle(color: Colors.green),
+                ),
+              ),
+            ),
+            const Text(
+              '諮商師專長',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: widget.specialties.map((specialty) {
+                final isSelected = _selectedSpecialties.contains(specialty);
+                return ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      if (isSelected) {
+                        _selectedSpecialties.remove(specialty);
+                      } else {
+                        _selectedSpecialties.add(specialty);
+                      }
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(90, 40),
+                    backgroundColor:
+                        isSelected ? Colors.green : Colors.grey[300],
+                  ),
+                  child: Text(
+                    specialty,
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, _selectedSpecialties);
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+                backgroundColor: Colors.green,
+              ),
+              child: const Text('確認'),
+            ),
+          ],
+        ),
       ),
     );
   }

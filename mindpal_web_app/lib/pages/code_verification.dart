@@ -219,7 +219,7 @@ class CodeVerificationState extends State<CodeVerification> {
                     ),
                     child: isTimerRunning
                         ? Text("$countdown 後可重新送出")
-                        : const Text('傳送驗證碼'),
+                        : const Text('發送驗證碼'),
                   ),
                   ElevatedButton(
                     onPressed: _validateCode,

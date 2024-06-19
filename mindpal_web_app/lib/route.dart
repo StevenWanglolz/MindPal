@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindpad_web_app/pages/adminMain.dart';
 import 'pages/email_verification.dart';
 import 'pages/code_verification.dart';
 import 'pages/password_reset.dart';
@@ -25,6 +26,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const Register2());
       case '/counselorLogin':
         return MaterialPageRoute(builder: (_) => const CounselorLogin());
+      case '/adminLogin':
+        return MaterialPageRoute(builder: (_) => const AdminLogin());
+      case '/adminMain':
+        return MaterialPageRoute(builder: (_) => const AdminMain());
       default:
         return _errorRoute();
     }

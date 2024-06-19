@@ -4,10 +4,10 @@ class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
 
   @override
-  AdminLoginPageState createState() => AdminLoginPageState();
+  AdminLoginState createState() => AdminLoginState();
 }
 
-class AdminLoginPageState extends State<AdminLogin> {
+class AdminLoginState extends State<AdminLogin> {
   bool isChecked = false;
   bool isEmailEmpty = false;
   bool isPasswordEmpty = false;
@@ -21,6 +21,7 @@ class AdminLoginPageState extends State<AdminLogin> {
     'admin1@example.com': 'adminpass',
     'admin2@example.com': 'admin123',
     'admin3@example.com': 'adm!np@ss',
+    'a': 'b'
   };
 
   void _login() {
@@ -35,12 +36,12 @@ class AdminLoginPageState extends State<AdminLogin> {
       }
 
       if (!users.containsKey(_emailController.text)) {
-        errorMessage = '此帳號不存在';
+        errorMessage = '帳號不存在';
       } else if (users[_emailController.text] != _passwordController.text) {
         errorMessage = '密碼錯誤';
       } else {
         errorMessage = '';
-        Navigator.pushNamed(context, '/nextPage');
+        Navigator.pushNamed(context, '/adminMain');
       }
     });
   }
@@ -74,16 +75,16 @@ class AdminLoginPageState extends State<AdminLogin> {
                 ),
               ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/register1');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-              ),
-              child: const Text('註冊'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/register1');
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.green,
+            //     padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   ),
+            //   child: const Text('註冊'),
+            // ),
           ],
         ),
       ),
