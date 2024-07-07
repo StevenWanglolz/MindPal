@@ -230,6 +230,25 @@ class _CounselorMainWithCertiState extends State<CounselorMainWithCerti>
                         ],
                       ),
                     ),
+                    const SizedBox(width: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/counselorLogin');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.grey[300],
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('登出'),
+                          Icon(Icons.arrow_forward),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
