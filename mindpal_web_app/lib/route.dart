@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mindpad_web_app/pages/adminMain.dart';
+import 'pages/adminMain.dart';
+import 'pages/counselorMainNoCerti.dart';
+import 'pages/counselorMainWithCerti.dart';
 import 'pages/email_verification.dart';
 import 'pages/code_verification.dart';
 import 'pages/password_reset.dart';
-import 'pages/login.dart';
+// import 'pages/login.dart';
 import 'pages/register1.dart';
 import 'pages/register2.dart';
 import 'pages/counselorLogin.dart';
@@ -30,6 +32,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AdminLogin());
       case '/adminMain':
         return MaterialPageRoute(builder: (_) => const AdminMain());
+      case '/counselorMainNoCerti':
+        return MaterialPageRoute(builder: (_) => const CounselorMainNoCerti());
+      case '/counselorMainWithCerti':
+        return MaterialPageRoute(
+            builder: (_) => const CounselorMainWithCerti());
       default:
         return _errorRoute();
     }
