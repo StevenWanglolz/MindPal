@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bcrypt/bcrypt.dart';
+import 'package:mindpad_web_app/tools/global.dart';
 
 class Register1 extends StatefulWidget {
   const Register1({super.key});
@@ -20,22 +22,46 @@ class Register1State extends State<Register1> {
   bool isPasswordEmpty = false;
   bool isPasswordValid = true;
 
-  void _validateAndProceed() {
+  void _validateAndProceed() async {
     setState(() {
       isUsernameEmpty = _usernameController.text.isEmpty;
       isEmailEmpty = _emailController.text.isEmpty;
       isPhoneEmpty = _phoneController.text.isEmpty;
       isPasswordEmpty = _passwordController.text.isEmpty;
       isPasswordValid = _validatePassword(_passwordController.text);
-
-      if (!isUsernameEmpty &&
-          !isEmailEmpty &&
-          !isPhoneEmpty &&
-          !isPasswordEmpty &&
-          isPasswordValid) {
-        Navigator.pushNamed(context, '/register2');
-      }
     });
+    if (!isUsernameEmpty &&
+        !isEmailEmpty &&
+        !isPhoneEmpty &&
+        !isPasswordEmpty &&
+        isPasswordValid) {
+      final String salt = BCrypt.gensalt();
+      final String hashedPassword =
+          BCrypt.hashpw(_passwordController.text, salt);
+      var signUpResponse = await therapistService.createTherapist(
+          _usernameController.text,
+          _phoneController.text,
+          _emailController.text,
+          hashedPassword,
+          salt);
+      switch (signUpResponse["status_code"]) {
+        case 200:
+          if (mounted) {
+            Navigator.pushNamed(context, '/register2');
+            showMindPalHintDialog("註冊成功", context);
+          }
+          break;
+        case 409:
+          if (mounted) showMindPalHintDialog("信箱已經註冊過了", context);
+          break;
+        case -1:
+          if (mounted) showMindPalHintDialog("尚未連接網路，請稍後再試", context);
+          break;
+        default:
+          showMindPalHintDialog("伺服器錯誤，請重新嘗試", context);
+          break;
+      }
+    }
   }
 
   bool _validatePassword(String password) {
